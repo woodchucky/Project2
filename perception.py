@@ -37,8 +37,8 @@ def color_thresh_rock(img):
     # Require that each pixel be above all three threshold values in RGB
     # above_thresh will now contain a boolean array with "True"
     # where threshold was met
-    above_thresh = (img[:,:,2]<50) \
-    & (img[:,:,0] > 100) & (img[:,:,1] > 100)
+    above_thresh = (img[:,:,2]<25) \
+    & (img[:,:,0] > 140) & (img[:,:,0] <205) & (img[:,:,1] > 110) & (img[:,:,1] < 180)
     # Index the array of zeros with the boolean array and set to 1
     color_select[above_thresh] = 1
     # Return the binary image
@@ -92,10 +92,10 @@ def pix_to_world(xpix, ypix, xpos, ypos, yaw, world_size, scale):
     # Apply translation
     xpix_tran, ypix_tran = translate_pix(xpix_rot, ypix_rot, xpos, ypos, scale)
     # Perform rotation, translation and clipping all at once
-    #x_pix_world = np.clip(np.int_(xpix_tran), 0, world_size - 1)
-    #y_pix_world = np.clip(np.int_(ypix_tran), 0, world_size - 1)
+    x_pix_world = np.clip(np.int_(xpix_tran), 0, world_size - 1)
+    y_pix_world = np.clip(np.int_(ypix_tran), 0, world_size - 1)
     # Return the result
-    return np.int_(xpix_tran), np.int_(ypix_tran)
+    return x_pix_world, y_pix_world
 
 # Define a function to perform a perspective transform
 def perspect_transform(img, src, dst):

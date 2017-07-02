@@ -52,14 +52,14 @@ def decision_step(Rover):
                     Rover.brake = 0
                     # Turn range is +/- 15 degrees, when stopped the next line will induce 4-wheel turning            # Fine - tuned steering CHANGE
                     Rover.steer = -45 # Could be more clever here about which way to turn
-                # If we're stopped but see sufficient navigable terrain in front then go! THIS CODE IS PROBLEMATIC:
+                # If we're stopped but see sufficient navigable terrain in front then go! THIS CODE IS PROBLEMATIC:  TRIED -45 and 45 but got stuck in loops, maybe randomize from -45 to -35, 35 to 45?
                 if len(Rover.nav_angles) >= Rover.go_forward:
                     # Set throttle back to stored value
                     Rover.throttle = Rover.throttle_set
                     # Release the brake
                     Rover.brake = 0
-                    # Set steer to mean angle
-                    Rover.steer = np.clip(np.mean(Rover.nav_angles * 180/np.pi), -45, 45)
+                    # Set steer to mean angle - Randomize to prevent looping in wide areas?
+                    Rover.steer = np.clip(np.mean(Rover.nav_angles * 180/np.pi), np.random.uniform(-75, -35), np.random.uniform(15, 35))
                     Rover.mode = 'forward'
     # Just to make the rover do something 
     # even if no modifications have been made to the code
